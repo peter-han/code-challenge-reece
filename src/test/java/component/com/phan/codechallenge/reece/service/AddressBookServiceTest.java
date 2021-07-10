@@ -9,33 +9,50 @@ import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 
+import java.util.stream.IntStream;
+
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 
 @ComponentTest
 public class AddressBookServiceTest {
     @Autowired
-    AddressBookService addressBookService;
+    AddressBookService service;
     @Autowired
-    AddressBookRepository addressBookRepository;
+    AddressBookRepository repository;
 
     String userName = "mickey mouse";
 
     @BeforeEach
     void setUp() {
-        addressBookRepository.deleteAll();
+        repository.deleteAll();
     }
 
     @Test
-    void create_multipleBooks(TestInfo testInfo) {
-        for (int i = 1; i < 5; i++) {
-            String bookName = testInfo.getDisplayName() + i;
-            AddressBook addressBook = addressBookService.save(userName, bookName);
+    void create_concurrent(TestInfo testInfo) {
+        IntStream.rangeClosed(1, 5)
+                .parallel()
+                .forEach(value -> {
+                    String bookName = testInfo.getDisplayName() + value;
+                    AddressBook addressBook = service.save(userName, bookName);
 
-            assertEquals(i, addressBookRepository.count());
+                    assertNotNull(addressBook);
+                    assertEquals(bookName, addressBook.getName());
+                });
 
-            assertNotNull(addressBook);
-            assertEquals(bookName, addressBook.getName());
-        }
+        assertEquals(5, repository.count());
+    }
+
+    @Test
+    void delete(TestInfo testInfo) {
+        AddressBook addressBook = AddressBook.builder()
+                .name(testInfo.getDisplayName())
+                .userName(userName)
+                .build();
+        repository.save(addressBook);
+        assertEquals(1, repository.count());
+
+        service.delete(userName, testInfo.getDisplayName());
+        assertEquals(0, repository.count());
     }
 }

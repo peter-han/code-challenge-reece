@@ -6,6 +6,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.Optional;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -15,6 +17,7 @@ public class AddressBookService {
     public AddressBook save(String userName, String bookName) {
         return addressBookRepository.findByUserNameAndName(userName, bookName)
                 .orElseGet(() -> {
+                    // TODO race condition in save
                     AddressBook addressBook = AddressBook.builder()
                             .name(bookName)
                             .userName(userName)
@@ -24,11 +27,15 @@ public class AddressBookService {
                 });
     }
 
-    void delete() {
+    public void delete(String userName, String bookName) {
+        Optional<AddressBook> addressBook = addressBookRepository.findByUserNameAndName(userName, bookName);
+        if (!addressBook.isPresent()) {
+            throw new IllegalArgumentException(String.format("{} doesn't have address book {}", userName, bookName));
+        }
 
+        addressBookRepository.delete(addressBook.get());
     }
 
-    void findByUser() {
-
+    public void findByUser() {
     }
 }
