@@ -15,7 +15,7 @@ import java.util.Optional;
 import static org.junit.jupiter.api.Assertions.assertEquals;
 import static org.junit.jupiter.api.Assertions.assertNotNull;
 import static org.mockito.ArgumentMatchers.anyString;
-import static org.mockito.Mockito.when;
+import static org.mockito.Mockito.*;
 
 @ExtendWith(MockitoExtension.class)
 class AddressBookServiceTest {
@@ -36,20 +36,42 @@ class AddressBookServiceTest {
         assertNotNull(addressBook);
         assertEquals(testInfo.getDisplayName(), addressBook.getName());
         assertEquals(userName, addressBook.getUserName());
+
+        verify(addressBookRepository, times(1)).save(any());
     }
 
     @Test
     void createAddressBook_exist(TestInfo testInfo) {
-        AddressBook addressBook = AddressBook.builder().name(testInfo.getDisplayName()).build();
-        when(addressBookRepository.findByUserNameAndName(anyString(), anyString())).thenReturn(Optional.of(addressBook));
+        AddressBook addressBook = AddressBook.builder()
+                .name(testInfo.getDisplayName())
+                .userName(userName)
+                .build();
+        when(addressBookRepository.findByUserNameAndName(userName, testInfo.getDisplayName())).thenReturn(Optional.of(addressBook));
 
-        AddressBook book = addressBookService.save("hello kitty", "my first address book");
+        AddressBook book = addressBookService.save(userName, testInfo.getDisplayName());
 
         assertNotNull(book);
         assertEquals(testInfo.getDisplayName(), addressBook.getName());
+        assertEquals(userName, addressBook.getUserName());
+
+        verify(addressBookRepository, times(0)).save(any());
     }
 
     @Test
-    void delete() {
+    void delete_success(TestInfo testInfo) {
+        AddressBook addressBook = AddressBook.builder()
+                .name(testInfo.getDisplayName())
+                .userName(userName)
+                .build();
+        when(addressBookRepository.findByUserNameAndName(userName, testInfo.getDisplayName())).thenReturn(Optional.of(addressBook));
+
+        addressBookService.delete(userName, testInfo.getDisplayName());
+
+        verify(addressBookRepository, times(1)).delete(any());
+    }
+
+    @Test
+    void delete_notFound() {
+
     }
 }
