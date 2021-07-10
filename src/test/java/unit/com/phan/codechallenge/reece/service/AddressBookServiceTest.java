@@ -34,7 +34,7 @@ class AddressBookServiceTest {
     User user = User.builder().name(userName).addressBooks(new ArrayList<>()).build();
 
     @Test
-    void create_newUser(TestInfo testInfo) {
+    void createAddressBook_new(TestInfo testInfo) {
         when(addressBookRepository.findByUserAndName(anyString(), anyString())).thenReturn(Optional.empty());
         when(userService.getByName(anyString())).thenReturn(user);
 

@@ -18,11 +18,17 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 - Address book will hold name and phone numbers of contact entries
 - Create a REST API which will have endpoints for the following
-    - Users should be able to add new contact entries
-    - Users should be able to remove existing contact entries
-    - Users should be able to print all contacts in an address book
-    - Users should be able to maintain multiple address books
-    - Users should be able to print a unique set of all contacts across multiple address books
+  - Users should be able to add new contact entries
+  - Users should be able to remove existing contact entries
+  - Users should be able to print all contacts in an address book
+  - Users should be able to maintain multiple address books
+  - Users should be able to print a unique set of all contacts across multiple address books
+
+## Assumptions
+
+- the concurrent calls is not covered. The "name" on either user nor Address Book are not unique, means when concurrent
+  call happens with the same name, would create duplicated records. (to avoid such duplication, need to implement
+  database level of lock, but might reduece performance)
 
 ## Deliverables
 

@@ -30,7 +30,7 @@ class UserServiceTest {
     User user = User.builder().name(userName).addressBooks(new ArrayList<>()).build();
 
     @Test
-    void when_findByName_newUser_then_save() {
+    void findByName_newUser() {
         when(userRepository.findByName(anyString())).thenReturn(Optional.empty());
         when(userRepository.save(any(User.class))).thenReturn(user);
 
@@ -40,7 +40,7 @@ class UserServiceTest {
     }
 
     @Test
-    void when_findByName_existUser_then_get() {
+    void findByName_existUser() {
         when(userRepository.findByName(anyString())).thenReturn(Optional.of(user));
 
         User result = userService.getByName(userName);

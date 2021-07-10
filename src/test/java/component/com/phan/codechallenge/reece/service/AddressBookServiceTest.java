@@ -43,10 +43,6 @@ public class AddressBookServiceTest {
             assertEquals(bookName, addressBook.getName());
             assertEquals(userName, addressBook.getUser().getName());
             assertEquals(i, addressBook.getUser().getAddressBooks().size());
-
-//            User userInDb = userRepository.getById(addressBook.getUser().getId());
-//            assertEquals(userName, userInDb.getName());
-//            assertEquals(i, userInDb.getAddressBooks().size());
         }
     }
 }

@@ -25,31 +25,16 @@ class UserServiceTest {
     }
 
     @Test
-    void when_findByName_newUser_then_save() {
+    void findByName_duplicate() {
         assertEquals(0, userRepository.count());
 
-        User user = userService.getByName("Peter Han");
-        assertNotNull(user);
-        assertEquals("Peter Han", user.getName());
-        assertEquals(1, userRepository.count());
+        String userName = "mickey mouse";
 
-        user = userService.getByName("mickey mouse");
-        assertNotNull(user);
-        assertEquals("mickey mouse", user.getName());
-        assertEquals(2, userRepository.count());
-    }
-
-    @Test
-    void when_findByName_existUser_then_get() {
-        assertEquals(0, userRepository.count());
-        String name = "Peter Han";
-
-        User user = userService.getByName(name);
-        assertNotNull(user);
-        assertEquals(1, userRepository.count());
-
-        user = userService.getByName(name);
-        assertNotNull(user);
-        assertEquals(1, userRepository.count());
+        for (int i = 1; i < 5; i++) {
+            User user = userService.getByName(userName);
+            assertNotNull(user);
+            assertEquals(userName, user.getName());
+            assertEquals(1, userRepository.count());
+        }
     }
 }
