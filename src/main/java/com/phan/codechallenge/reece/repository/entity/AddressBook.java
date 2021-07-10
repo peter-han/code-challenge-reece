@@ -1,7 +1,9 @@
 package com.phan.codechallenge.reece.repository.entity;
 
+import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
@@ -11,6 +13,8 @@ import java.util.List;
 @Builder
 @Data
 @Table(name = "address_book")
+@NoArgsConstructor
+@AllArgsConstructor
 public class AddressBook {
     @Id
     @GeneratedValue
