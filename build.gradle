@@ -34,7 +34,8 @@ dependencies {
 test {
     useJUnitPlatform()
 }
-test.dependsOn(composeUp).finalizedBy(composeDown)
+test.dependsOn(composeUp)
+//        .finalizedBy(composeDown)
 
 dockerCompose {
     useComposeFiles = ['src/main/docker/compose/docker-compose.yaml']

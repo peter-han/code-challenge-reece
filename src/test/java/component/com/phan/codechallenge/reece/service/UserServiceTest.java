@@ -1,8 +1,9 @@
-package com.phan.codechallenge.reece.service;
+package component.com.phan.codechallenge.reece.service;
 
-import com.phan.codechallenge.reece.ComponentTest;
 import com.phan.codechallenge.reece.repository.UserRepository;
 import com.phan.codechallenge.reece.repository.entity.User;
+import com.phan.codechallenge.reece.service.UserService;
+import component.com.phan.codechallenge.reece.ComponentTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
