@@ -23,7 +23,7 @@ public class User {
     @Column(nullable = false, length = 20)
     private String name;
 
-    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "user", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<AddressBook> addressBooks;
 
     @Column(name = "create_timestamp", insertable = false, updatable = false)

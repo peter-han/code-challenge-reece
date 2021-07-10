@@ -7,6 +7,8 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
+
 @Slf4j
 @Service
 @RequiredArgsConstructor
@@ -22,6 +24,9 @@ public class AddressBookService {
                             .name(bookName)
                             .user(user)
                             .build();
+                    if (null == user.getAddressBooks()) {
+                        user.setAddressBooks(new ArrayList<>());
+                    }
                     user.getAddressBooks().add(addressBook);
                     addressBookRepository.save(addressBook);
                     return addressBook;

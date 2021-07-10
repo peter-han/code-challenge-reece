@@ -24,7 +24,7 @@ import static org.mockito.Mockito.when;
 class AddressBookServiceTest {
 
     @InjectMocks
-    AddressBookService addressBookService;
+    private AddressBookService addressBookService;
     @Mock
     private AddressBookRepository addressBookRepository;
     @Mock

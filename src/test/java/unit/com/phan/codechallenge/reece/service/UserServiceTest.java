@@ -6,7 +6,7 @@ import com.phan.codechallenge.reece.service.UserService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
-import org.mockito.Spy;
+import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
@@ -22,9 +22,9 @@ import static org.mockito.Mockito.when;
 class UserServiceTest {
 
     @InjectMocks
-    UserService userService;
-    @Spy
-    UserRepository userRepository;
+    private UserService userService;
+    @Mock
+    private UserRepository userRepository;
 
     String userName = "mickey mouse";
     User user = User.builder().name(userName).addressBooks(new ArrayList<>()).build();

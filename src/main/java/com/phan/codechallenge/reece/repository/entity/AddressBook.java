@@ -27,7 +27,7 @@ public class AddressBook {
     @JoinColumn(name = "user_id", nullable = false)
     private User user;
 
-    @OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL)
+    @OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
     @Column(name = "create_timestamp", insertable = false, updatable = false)
