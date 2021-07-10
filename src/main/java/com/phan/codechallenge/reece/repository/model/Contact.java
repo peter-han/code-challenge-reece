@@ -1,4 +1,4 @@
-package com.phan.codechallenge.reece.model;
+package com.phan.codechallenge.reece.repository.model;
 
 import lombok.Data;
 

@@ -1,4 +1,4 @@
-package com.phan.codechallenge.reece.model;
+package com.phan.codechallenge.reece.repository.model;
 
 import lombok.Data;
 
@@ -14,5 +14,7 @@ public class AddressBook {
     private long id;
 
     String name;
+
+    @OneToMany
     List<Contact> contacts;
 }

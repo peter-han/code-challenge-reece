@@ -1,6 +1,6 @@
 package com.phan.codechallenge.reece.repository;
 
-import com.phan.codechallenge.reece.model.Contact;
+import com.phan.codechallenge.reece.repository.model.Contact;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.stereotype.Repository;
 
