@@ -23,9 +23,8 @@ public class AddressBook {
     @Column(nullable = false, length = 100)
     private String name;
 
-    @ManyToOne
-    @JoinColumn(name = "user_id", nullable = false)
-    private User user;
+    @Column(name = "user_name", nullable = false, length = 40)
+    private String userName;
 
     @OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;

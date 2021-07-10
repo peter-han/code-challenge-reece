@@ -1,7 +1,6 @@
 package component.com.phan.codechallenge.reece.service;
 
 import com.phan.codechallenge.reece.repository.AddressBookRepository;
-import com.phan.codechallenge.reece.repository.UserRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.service.AddressBookService;
 import component.com.phan.codechallenge.reece.ComponentTest;
@@ -19,14 +18,11 @@ public class AddressBookServiceTest {
     AddressBookService addressBookService;
     @Autowired
     AddressBookRepository addressBookRepository;
-    @Autowired
-    UserRepository userRepository;
 
     String userName = "mickey mouse";
 
     @BeforeEach
     void setUp() {
-        userRepository.deleteAll();
         addressBookRepository.deleteAll();
     }
 
@@ -34,15 +30,12 @@ public class AddressBookServiceTest {
     void create_multipleBooks(TestInfo testInfo) {
         for (int i = 1; i < 5; i++) {
             String bookName = testInfo.getDisplayName() + i;
-            AddressBook addressBook = addressBookService.create(userName, bookName);
+            AddressBook addressBook = addressBookService.save(userName, bookName);
 
-            assertEquals(1, userRepository.count());
             assertEquals(i, addressBookRepository.count());
 
             assertNotNull(addressBook);
             assertEquals(bookName, addressBook.getName());
-            assertEquals(userName, addressBook.getUser().getName());
-            assertEquals(i, addressBook.getUser().getAddressBooks().size());
         }
     }
 }

@@ -27,7 +27,7 @@ As a Reece Branch Manager I would like an address book application So that I can
 ## Assumptions
 
 - the concurrent calls is not covered. The "name" on either user nor Address Book are not unique, means when concurrent
-  call happens with the same name, would create duplicated records. (to avoid such duplication, need to implement
+  call happens with the same name, could create duplicated records. (to avoid such duplication, need to implement
   database level of lock, but might reduece performance)
 
 ## Deliverables
