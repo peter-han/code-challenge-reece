@@ -10,10 +10,7 @@ import java.util.List;
 @Entity
 @NoArgsConstructor
 public class AddressBook {
-
-    private String id;
-
-    private String name;
-
-    private List<Contact> contacts;
+    String id;
+    String name;
+    List<Contact> contacts;
 }
