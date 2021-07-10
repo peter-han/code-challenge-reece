@@ -1,16 +1,18 @@
 package com.phan.codechallenge.reece.model;
 
 import lombok.Data;
-import lombok.NoArgsConstructor;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 import java.util.List;
 
 @Data
 @Entity
-@NoArgsConstructor
+@Table(name = "address_book")
 public class AddressBook {
-    String id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
     String name;
     List<Contact> contacts;
 }

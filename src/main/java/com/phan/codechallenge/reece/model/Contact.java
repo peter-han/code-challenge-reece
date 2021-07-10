@@ -2,12 +2,16 @@ package com.phan.codechallenge.reece.model;
 
 import lombok.Data;
 
-import javax.persistence.Entity;
+import javax.persistence.*;
 
 @Data
 @Entity
+@Table(name = "contact")
 public class Contact {
-    String id;
-    String name;
-    String phone;
+    @Id
+    @GeneratedValue(strategy = GenerationType.AUTO)
+    private long id;
+
+    private String name;
+    private String phone;
 }
