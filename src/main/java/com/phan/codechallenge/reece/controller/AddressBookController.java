@@ -16,11 +16,11 @@ public class AddressBookController {
 
     private final AddressBookService addressBookService;
 
-    public Callable<String> createAddressBookByUsers() {
+    public Callable<String> createUsers() {
         return null;
     }
 
-    public Callable<String> deleteAddressBookByUsers() {
+    public Callable<String> deleteByUsers() {
         return null;
     }
 

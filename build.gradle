@@ -24,11 +24,18 @@ dependencies {
     annotationProcessor 'org.projectlombok:lombok'
     testImplementation(
             'org.springframework.boot:spring-boot-starter-test',
-            'org.junit.jupiter:junit-jupiter-api:5.7.0'
+            'org.junit.jupiter:junit-jupiter-api'
+    )
+    testRuntimeOnly(
+            'org.junit.jupiter:junit-jupiter-engine'
     )
 }
 
-dockerCompose.isRequiredBy(test)
+test {
+    useJUnitPlatform()
+}
+test.dependsOn(composeUp)
+//        .finalizedBy(composeDown)
 
 dockerCompose {
     useComposeFiles = ['src/main/docker/compose/docker-compose.yaml']
