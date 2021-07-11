@@ -45,6 +45,7 @@ As a Reece Branch Manager I would like an address book application So that I can
       Book" may not unique. (to avoid such duplication, need to implement centralize lock (i.e database level), but
       might impact performance)
 - Dependencies security check is missing
+- Enable `RequestLoggingFilter`, only for demo API access log, not in prod.
 
 ## Deliverables
 
