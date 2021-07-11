@@ -52,6 +52,9 @@ public class ContactService {
         contactRepository.delete(contact);
     }
 
+    /*
+    TODO getContracts, can be merged
+     */
     public Set<ContactResponse> getContracts(String userName, String bookName) {
         Optional<AddressBook> addressBook = addressBookService.getAddressBook(userName, bookName);
 
