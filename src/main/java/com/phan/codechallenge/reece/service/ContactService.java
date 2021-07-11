@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
-@Transactional
+@Transactional // FIXME notes, not in prod
 public class ContactService {
     private final AddressBookService addressBookService;
     private final EntitlementService entitlementService;
