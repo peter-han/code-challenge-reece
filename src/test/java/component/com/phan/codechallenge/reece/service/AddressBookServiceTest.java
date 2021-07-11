@@ -4,7 +4,6 @@ import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.service.AddressBookService;
 import component.com.phan.codechallenge.reece.ComponentTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,11 +21,6 @@ public class AddressBookServiceTest {
     AddressBookRepository repository;
 
     String userName = "mickey mouse";
-
-    @BeforeEach
-    void setUp() {
-        repository.deleteAll();
-    }
 
     @Test
     void create_concurrent(TestInfo testInfo) {

@@ -40,9 +40,6 @@ class ContactServiceTest {
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
-        contactRepository.deleteAll();
-        addressBookRepository.deleteAll();
-
         request.setBookName(testInfo.getDisplayName());
         addressBookId = addressBookService.save(userName, testInfo.getDisplayName()).getId();
     }
