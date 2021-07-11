@@ -3,6 +3,7 @@ package unit.com.phan.codechallenge.reece.service;
 import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.service.AddressBookService;
+import com.phan.codechallenge.reece.service.EntitlementService;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.junit.jupiter.api.extension.ExtendWith;
@@ -12,8 +13,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
 import static org.mockito.Mockito.*;
 
@@ -24,6 +24,8 @@ class AddressBookServiceTest {
     private AddressBookService addressBookService;
     @Mock
     private AddressBookRepository addressBookRepository;
+    @Mock
+    private EntitlementService entitlementService;
 
     String userName = "mickey mouse";
 
@@ -63,7 +65,8 @@ class AddressBookServiceTest {
                 .name(testInfo.getDisplayName())
                 .userName(userName)
                 .build();
-        when(addressBookRepository.findByUserNameAndName(userName, testInfo.getDisplayName())).thenReturn(Optional.of(addressBook));
+        when(entitlementService.entitlementCheck(eq(userName), anyString()))
+                .thenReturn(addressBook);
 
         addressBookService.delete(userName, testInfo.getDisplayName());
 
@@ -71,7 +74,14 @@ class AddressBookServiceTest {
     }
 
     @Test
-    void delete_notFound() {
+    void delete_notFound(TestInfo testInfo) {
+        when(entitlementService.entitlementCheck(eq(userName), anyString()))
+                .thenThrow(IllegalArgumentException.class);
+
+        assertThrows(IllegalArgumentException.class, () -> addressBookService.delete(userName, testInfo.getDisplayName()));
+    }
+
+    void saveContact() {
 
     }
 }

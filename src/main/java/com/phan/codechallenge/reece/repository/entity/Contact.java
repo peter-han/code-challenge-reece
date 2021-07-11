@@ -19,7 +19,7 @@ public class Contact {
     @GeneratedValue
     private long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 40)
     private String name;
 
     @Column(nullable = false, length = 10)

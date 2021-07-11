@@ -6,13 +6,14 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
+import java.util.List;
 
 @Slf4j
 @Service
 @RequiredArgsConstructor
 public class AddressBookService {
     private final AddressBookRepository addressBookRepository;
+    private final EntitlementService entitlementService;
 
     public AddressBook save(String userName, String bookName) {
         return addressBookRepository.findByUserNameAndName(userName, bookName)
@@ -28,14 +29,11 @@ public class AddressBookService {
     }
 
     public void delete(String userName, String bookName) {
-        Optional<AddressBook> addressBook = addressBookRepository.findByUserNameAndName(userName, bookName);
-        if (!addressBook.isPresent()) {
-            throw new IllegalArgumentException(String.format("{} doesn't have address book {}", userName, bookName));
-        }
-
-        addressBookRepository.delete(addressBook.get());
+        AddressBook addressBook = entitlementService.entitlementCheck(userName, bookName);
+        addressBookRepository.delete(addressBook);
     }
 
-    public void findByUser() {
+    public List<AddressBook> getAddressBooks(String userName) {
+        return addressBookRepository.findByUserName(userName);
     }
 }
