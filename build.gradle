@@ -40,10 +40,10 @@ test {
     testLogging {
         events "passed", "skipped", "failed"
     }
+    dependsOn composeUp
+    finalizedBy composeDown
     finalizedBy jacocoTestReport
 }
-test.dependsOn(composeUp)
-        .finalizedBy(composeDown)
 
 dockerCompose {
     useComposeFiles = ['src/main/docker/compose/docker-compose.yaml']
