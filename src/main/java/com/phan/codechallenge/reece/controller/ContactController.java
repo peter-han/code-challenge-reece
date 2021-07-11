@@ -8,8 +8,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
-import javax.validation.constraints.Max;
+import javax.validation.Valid;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -24,19 +25,19 @@ public class ContactController {
     private final ContactService contactService;
 
     @PostMapping
-    public ResponseEntity addContact(@RequestBody ContactRequest request) {
+    public ResponseEntity addContact(@Valid @RequestBody ContactRequest request) {
         contactService.saveContact(request);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
-    public ResponseEntity deleteByUser(@RequestBody ContactRequest request) {
+    public ResponseEntity deleteByUser(@Valid @RequestBody ContactRequest request) {
         contactService.deleteContact(request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
+    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@Valid @PathVariable @NotEmpty @Size(max = 40) String user) {
         Set<ContactResponse> contracts = contactService.getContracts(user);
         return ResponseEntity.ok(contracts);
     }

@@ -5,8 +5,8 @@ import com.phan.codechallenge.reece.controller.bean.AddressBookRequest;
 import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import component.com.phan.codechallenge.reece.ComponentTest;
+import org.apache.commons.lang3.RandomStringUtils;
 import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -63,10 +63,37 @@ class AddressBookControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
-    @Disabled
     @Test
     void createByUsers_invalidBody_4xx() throws Exception {
         AddressBookRequest request = AddressBookRequest.builder().build();
+
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createByUsers_invalidUserName_4xx() throws Exception {
+        AddressBookRequest request = AddressBookRequest.builder()
+                .userName(RandomStringUtils.random(100))
+                .bookName(RandomStringUtils.random(50))
+                .build();
+
+        mockMvc.perform(post(ENDPOINT)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(request)))
+                .andExpect(status().isBadRequest());
+    }
+
+    @Test
+    void createByUsers_invalidBookName_4xx() throws Exception {
+        AddressBookRequest request = AddressBookRequest.builder()
+                .userName(RandomStringUtils.randomAlphabetic(10))
+                .bookName(RandomStringUtils.randomAlphabetic(200))
+                .build();
 
         mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)

@@ -39,7 +39,7 @@ class ContactServiceTest {
 
     String userName = "mickey mouse";
     String contactName = "hello kitty";
-    Integer phone = 123456789;
+    String phone = "123456789";
     ContactRequest request = ContactRequest.builder()
             .userName(userName)
             .contactName(contactName)
@@ -80,7 +80,7 @@ class ContactServiceTest {
         Contact contact = Contact.builder()
                 .addressBook(addressBook)
                 .name(contactName)
-                .phone(987654321)
+                .phone("987654321")
                 .build();
         when(entitlementService.entitlementCheck(eq(userName), anyString()))
                 .thenReturn(addressBook);
@@ -96,7 +96,7 @@ class ContactServiceTest {
     void saveContact_Entitled_addMore() {
         Contact contact = Contact.builder()
                 .name(userName)
-                .phone(987654321)
+                .phone("987654321")
                 .build();
         addressBook.setContacts(new ArrayList<>(Collections.singletonList(contact)));
         when(entitlementService.entitlementCheck(eq(userName), anyString()))
@@ -130,7 +130,7 @@ class ContactServiceTest {
     void deleteContact_entitled() {
         Contact contact = Contact.builder()
                 .name(userName)
-                .phone(987654321)
+                .phone("987654321")
                 .build();
         addressBook.setContacts(new ArrayList<>(Collections.singletonList(contact)));
 
@@ -163,7 +163,7 @@ class ContactServiceTest {
                 .mapToObj(value -> Contact.builder()
                         .name(userName + value)
                         .addressBook(addressBook)
-                        .phone(987654321 + value)
+                        .phone("987654321" + value)
                         .build())
                 .collect(Collectors.toList()));
 
@@ -176,7 +176,7 @@ class ContactServiceTest {
         Contact contact = Contact.builder()
                 .name(userName)
                 .addressBook(addressBook)
-                .phone(987654321)
+                .phone("987654321")
                 .build();
         addressBook.setContacts(Collections.singletonList(contact));
 

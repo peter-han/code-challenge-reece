@@ -22,7 +22,7 @@ public class Contact {
     private String name;
 
     @Column(nullable = false, length = 10)
-    private Integer phone;
+    private String phone;
 
     @ManyToOne
     @JoinColumn(name = "address_book_id", nullable = false)

@@ -39,7 +39,7 @@ class ContactControllerTest {
             .userName(userName)
             .bookName("test book")
             .contactName("hello kitty")
-            .phone(1234567890)
+            .phone("1234567890")
             .build();
 
     @Test
@@ -67,6 +67,7 @@ class ContactControllerTest {
 
         assertEquals(0, contactRepository.count());
     }
+
 
     @Test
     void deleteByUser() throws Exception {
