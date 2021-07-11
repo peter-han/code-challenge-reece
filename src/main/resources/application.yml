@@ -21,3 +21,7 @@ spring:
             scripts:
               action: create
               create-target: build/schema.sql
+
+springdoc:
+  swagger-ui:
+    path: /swagger-ui.html
