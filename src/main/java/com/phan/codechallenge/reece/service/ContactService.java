@@ -10,6 +10,7 @@ import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 @Service
@@ -40,16 +41,14 @@ public class ContactService {
         }
     }
 
-    public void deleteContact(String userName, String bookName, String contactName, Integer phone) {
-        AddressBook addressBook = entitlementService.entitlementCheck(userName, bookName);
+    public void deleteContact(ContactRequest request) {
+        AddressBook addressBook = entitlementService.entitlementCheck(request.getUserName(), request.getBookName());
 
-//        Optional<Contact> contact = contactRepository.findByBookAndContactName(bookName, contactName)
-//                .orElseThrow(() -> {
-//                    throw new IllegalArgumentException(String.format("{} doesn't have address book {}", userName, bookName));
-//                });
+        Contact contact = contactRepository.findByBookAndContactName(request.getBookName(), request.getContactName())
+                .orElseThrow(NoSuchElementException::new);
 
-//        addressBook.getContacts().remove();
+        addressBook.getContacts().remove(contact);
+        contactRepository.delete(contact);
     }
-
 
 }

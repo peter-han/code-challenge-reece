@@ -36,6 +36,7 @@ class ContactServiceTest {
             .contactName("hello kitty")
             .phone(123456789)
             .build();
+    long addressBookId;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
@@ -43,7 +44,7 @@ class ContactServiceTest {
         addressBookRepository.deleteAll();
 
         request.setBookName(testInfo.getDisplayName());
-        addressBookService.save(userName, testInfo.getDisplayName());
+        addressBookId = addressBookService.save(userName, testInfo.getDisplayName()).getId();
     }
 
     @Test
@@ -65,5 +66,14 @@ class ContactServiceTest {
 
     @Test
     void deleteContact() {
+        assertEquals(0, contactRepository.count());
+
+        contactService.saveContact(request);
+        assertEquals(1, addressBookRepository.findById(addressBookId).get().getContacts().size());
+        assertEquals(1, contactRepository.count());
+
+        contactService.deleteContact(request);
+        assertEquals(0, contactRepository.count());
+        assertEquals(0, addressBookRepository.findById(addressBookId).get().getContacts().size());
     }
 }

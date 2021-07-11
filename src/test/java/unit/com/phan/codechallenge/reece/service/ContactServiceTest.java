@@ -17,6 +17,7 @@ import org.mockito.junit.jupiter.MockitoExtension;
 
 import java.util.ArrayList;
 import java.util.Collections;
+import java.util.NoSuchElementException;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -109,6 +110,38 @@ class ContactServiceTest {
     }
 
     @Test
-    void deleteContact() {
+    void deleteContact_notEntitled() {
+        when(entitlementService.entitlementCheck(eq(userName), anyString()))
+                .thenThrow(IllegalArgumentException.class);
+
+        assertThrows(IllegalArgumentException.class, () -> contactService.deleteContact(request));
+    }
+
+    @Test
+    void deleteContact_entitled_notFound() {
+        when(entitlementService.entitlementCheck(eq(userName), anyString()))
+                .thenReturn(addressBook);
+        when(contactRepository.findByBookAndContactName(eq(request.getBookName()), eq(request.getContactName())))
+                .thenReturn(Optional.empty());
+
+        assertThrows(NoSuchElementException.class, () -> contactService.deleteContact(request));
+    }
+
+    @Test
+    void deleteContact_entitled() {
+        Contact contact = Contact.builder()
+                .name(userName)
+                .phone(987654321)
+                .build();
+        addressBook.setContacts(new ArrayList<>(Collections.singletonList(contact)));
+
+        when(entitlementService.entitlementCheck(eq(userName), anyString()))
+                .thenReturn(addressBook);
+        when(contactRepository.findByBookAndContactName(eq(request.getBookName()), eq(request.getContactName())))
+                .thenReturn(Optional.ofNullable(contact));
+
+        contactService.deleteContact(request);
+
+        assertEquals(0, addressBook.getContacts().size());
     }
 }
