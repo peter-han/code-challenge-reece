@@ -26,16 +26,25 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 ## Assumptions
 
-- the concurrent calls is not covered. The "name" on either user nor Address Book are not unique, means when concurrent
-  call happens with the same name, could create duplicated records. (to avoid such duplication, need to implement
-  database level of lock, but might reduece performance)
+- Auth is not required
+- User's name is unique to identify a user.
+- User can have multiple Addresses; user define the name of each Address Book; the name is unique to identify a
+  AddressBook per User.
+- API doesn't provide function to edit Address Name.
 
-## Not Implemented
+## Not Implemented Yet
 
-- Callable API
-- Managing ThreadPool
-- Performance test
+- Callable API & web execution threads
+- Managing ThreadPool, timeout (circuit breaker is not require)
+- Business error mapping, no custom exception are defined
 - Blackbox test, API swagger validation (required CI pipeline to be setup)
+- Performance test
+    - `@Transactional` tag is in used, need to review if introduce database lock
+    - Entity has been designed "double bind" and "EAGER fetch". Need to review in perf load.
+    - the concurrent calls are not covered. Duplicated records can happen, that the "name" on either "User" nor "Address
+      Book" may not unique. (to avoid such duplication, need to implement centralize lock (i.e database level), but
+      might impact performance)
+- Dependencies security check is missing
 
 ## Deliverables
 
