@@ -7,6 +7,6 @@ import lombok.Data;
 @Data
 public class ContactResponse {
     private String name;
-    private Integer phone;
+    private String phone;
     private String addressBook;
 }

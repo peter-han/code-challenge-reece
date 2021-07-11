@@ -34,7 +34,7 @@ class ContactServiceTest {
     ContactRequest request = ContactRequest.builder()
             .userName(userName)
             .contactName("hello kitty")
-            .phone(123456789)
+            .phone("123456789")
             .build();
     long addressBookId;
 

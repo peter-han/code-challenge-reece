@@ -9,8 +9,8 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import javax.validation.constraints.Size;
 import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
@@ -37,7 +37,7 @@ public class ContactController {
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@Valid @PathVariable @NotEmpty @Max(20) String user) {
+    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@Valid @PathVariable @NotEmpty @Size(max = 40) String user) {
         Set<ContactResponse> contracts = contactService.getContracts(user);
         return ResponseEntity.ok(contracts);
     }
