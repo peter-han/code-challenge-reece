@@ -56,7 +56,7 @@ class ContactServiceTest {
         assertEquals(1, books.size());
         assertEquals(1, books.get(0).getContacts().size());
 
-        Contact contactInDB = books.get(0).getContacts().get(0);
+        Contact contactInDB = books.get(0).getContacts().iterator().next();
         assertEquals(request.getPhone(), contactInDB.getPhone());
         assertEquals(request.getContactName(), contactInDB.getName());
     }
@@ -72,5 +72,13 @@ class ContactServiceTest {
         contactService.deleteContact(request);
         assertEquals(0, contactRepository.count());
         assertEquals(0, addressBookRepository.findById(addressBookId).get().getContacts().size());
+    }
+
+    @Test
+    void getContracts() {
+        contactService.saveContact(request);
+        contactService.saveContact(request);
+
+        assertEquals(1, contactService.getContracts(userName).size());
     }
 }

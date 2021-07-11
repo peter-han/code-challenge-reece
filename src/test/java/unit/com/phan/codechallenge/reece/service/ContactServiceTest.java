@@ -1,10 +1,10 @@
 package unit.com.phan.codechallenge.reece.service;
 
 import com.phan.codechallenge.reece.controller.bean.ContactRequest;
-import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.ContactRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.repository.entity.Contact;
+import com.phan.codechallenge.reece.service.AddressBookService;
 import com.phan.codechallenge.reece.service.ContactService;
 import com.phan.codechallenge.reece.service.EntitlementService;
 import org.junit.jupiter.api.BeforeEach;
@@ -15,10 +15,9 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.ArrayList;
-import java.util.Collections;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
+import java.util.stream.IntStream;
 
 import static org.junit.jupiter.api.Assertions.*;
 import static org.mockito.ArgumentMatchers.anyString;
@@ -32,11 +31,11 @@ class ContactServiceTest {
     private ContactService contactService;
 
     @Mock
-    private EntitlementService entitlementService;
-    @Mock
     private ContactRepository contactRepository;
     @Mock
-    private AddressBookRepository addressBookRepository;
+    private EntitlementService entitlementService;
+    @Mock
+    private AddressBookService addressBookService;
 
     String userName = "mickey mouse";
     String contactName = "hello kitty";
@@ -143,5 +142,46 @@ class ContactServiceTest {
         contactService.deleteContact(request);
 
         assertEquals(0, addressBook.getContacts().size());
+    }
+
+    @Test
+    void getContracts_noBook() {
+        when(addressBookService.getAddressBooks(userName)).thenReturn(Collections.emptyList());
+        assertEquals(0, contactService.getContracts(userName).size());
+    }
+
+    @Test
+    void getContracts_noContact() {
+        addressBook.setContacts(Collections.emptyList());
+        when(addressBookService.getAddressBooks(userName)).thenReturn(Collections.singletonList(addressBook));
+        assertEquals(0, contactService.getContracts(userName).size());
+    }
+
+    @Test
+    void getContracts() {
+        addressBook.setContacts(IntStream.rangeClosed(1, 5)
+                .mapToObj(value -> Contact.builder()
+                        .name(userName + value)
+                        .phone(987654321 + value)
+                        .build())
+                .collect(Collectors.toList()));
+
+        when(addressBookService.getAddressBooks(userName)).thenReturn(Collections.singletonList(addressBook));
+        assertEquals(5, contactService.getContracts(userName).size());
+    }
+
+    @Test
+    void getContracts_duplicate() {
+        Contact contact = Contact.builder()
+                .name(userName)
+                .phone(987654321)
+                .build();
+        addressBook.setContacts(Collections.singletonList(contact));
+
+        AddressBook addressBook1 = this.addressBook.withName("Book2");
+        addressBook1.setContacts(Collections.singletonList(contact));
+
+        when(addressBookService.getAddressBooks(userName)).thenReturn(Arrays.asList(addressBook, addressBook1));
+        assertEquals(1, contactService.getContracts(userName).size());
     }
 }

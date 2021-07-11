@@ -9,14 +9,14 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
 import javax.transaction.Transactional;
-import java.util.ArrayList;
-import java.util.NoSuchElementException;
-import java.util.Optional;
+import java.util.*;
+import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
 @Transactional
 public class ContactService {
+    private final AddressBookService addressBookService;
     private final EntitlementService entitlementService;
     private final ContactRepository contactRepository;
 
@@ -51,4 +51,14 @@ public class ContactService {
         contactRepository.delete(contact);
     }
 
+    public Set<Contact> getContracts(String userName) {
+        List<AddressBook> addressBooks = addressBookService.getAddressBooks(userName);
+
+        if (CollectionUtils.isEmpty(addressBooks))
+            return Collections.emptySet();
+
+        return addressBooks.stream()
+                .flatMap(addressBook -> addressBook.getContacts().stream())
+                .collect(Collectors.toSet());
+    }
 }
