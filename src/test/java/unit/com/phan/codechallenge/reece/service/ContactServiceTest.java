@@ -162,6 +162,7 @@ class ContactServiceTest {
         addressBook.setContacts(IntStream.rangeClosed(1, 5)
                 .mapToObj(value -> Contact.builder()
                         .name(userName + value)
+                        .addressBook(addressBook)
                         .phone(987654321 + value)
                         .build())
                 .collect(Collectors.toList()));
@@ -174,6 +175,7 @@ class ContactServiceTest {
     void getContracts_duplicate() {
         Contact contact = Contact.builder()
                 .name(userName)
+                .addressBook(addressBook)
                 .phone(987654321)
                 .build();
         addressBook.setContacts(Collections.singletonList(contact));

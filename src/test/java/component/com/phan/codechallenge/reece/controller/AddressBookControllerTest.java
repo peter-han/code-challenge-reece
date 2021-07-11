@@ -6,6 +6,7 @@ import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import component.com.phan.codechallenge.reece.ComponentTest;
 import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -62,6 +63,7 @@ class AddressBookControllerTest {
                 .andExpect(status().isBadRequest());
     }
 
+    @Disabled
     @Test
     void createByUsers_invalidBody_4xx() throws Exception {
         AddressBookRequest request = AddressBookRequest.builder().build();
