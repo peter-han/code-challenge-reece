@@ -8,11 +8,13 @@ import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.util.CollectionUtils;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.Optional;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class ContactService {
     private final EntitlementService entitlementService;
     private final ContactRepository contactRepository;
@@ -27,6 +29,7 @@ public class ContactService {
             Contact newContact = Contact.builder()
                     .name(request.getContactName())
                     .phone(request.getPhone())
+                    .addressBook(addressBook)
                     .build();
 
             if (CollectionUtils.isEmpty(addressBook.getContacts())) {

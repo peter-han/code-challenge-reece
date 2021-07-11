@@ -39,14 +39,15 @@ class ContactServiceTest {
     String userName = "mickey mouse";
     String contactName = "hello kitty";
     Integer phone = 123456789;
-    ContactRequest request = new ContactRequest();
+    ContactRequest request = ContactRequest.builder()
+            .userName(userName)
+            .contactName(contactName)
+            .phone(phone)
+            .build();
     AddressBook addressBook;
 
     @BeforeEach
     void setUp(TestInfo testInfo) {
-        request.setUserName(userName);
-        request.setContactName(contactName);
-        request.setPhone(phone);
         request.setBookName(testInfo.getDisplayName());
 
         addressBook = AddressBook.builder()

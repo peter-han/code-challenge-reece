@@ -10,6 +10,6 @@ import java.util.Optional;
 @Repository
 public interface ContactRepository extends JpaRepository<Contact, Long> {
 
-    @Query("SELECT c FROM Contact c WHERE c.addressBook = ?1 AND c.name = ?2")
+    @Query("SELECT c FROM Contact c WHERE c.addressBook.name = ?1 AND c.name = ?2")
     Optional<Contact> findByBookAndContactName(String addressBook, String contactName);
 }
