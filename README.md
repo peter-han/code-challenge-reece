@@ -58,8 +58,8 @@ As a Reece Branch Manager I would like an address book application So that I can
 ## Setup
 
 1. Make sure you have Java 8 and Docker installed in your machine.
-2. Clone git respository
-3. Build app, run tests and quality check from command line:
+2. Clone git repository
+3. Build app, run tests
 
    ```./gradlew clean build```
 
