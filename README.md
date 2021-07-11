@@ -50,6 +50,10 @@ As a Reece Branch Manager I would like an address book application So that I can
 
    ```./gradlew clean build```
 
+4. build docker
+
+   ```./gradlew bootBuildImage```
+
 ## Quality Analysis
 
 |Name|Report|

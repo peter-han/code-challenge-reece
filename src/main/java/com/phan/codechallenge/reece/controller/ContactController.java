@@ -8,6 +8,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
 import java.util.Set;
@@ -24,19 +25,19 @@ public class ContactController {
     private final ContactService contactService;
 
     @PostMapping
-    public ResponseEntity addContact(@RequestBody ContactRequest request) {
+    public ResponseEntity addContact(@Valid @RequestBody ContactRequest request) {
         contactService.saveContact(request);
         return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
-    public ResponseEntity deleteByUser(@RequestBody ContactRequest request) {
+    public ResponseEntity deleteByUser(@Valid @RequestBody ContactRequest request) {
         contactService.deleteContact(request);
         return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
+    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@Valid @PathVariable @NotEmpty @Max(20) String user) {
         Set<ContactResponse> contracts = contactService.getContracts(user);
         return ResponseEntity.ok(contracts);
     }
