@@ -1,12 +1,8 @@
 package com.phan.codechallenge.reece.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
-import java.sql.Timestamp;
 import java.util.List;
 
 @Entity
@@ -15,9 +11,12 @@ import java.util.List;
 @Table(name = "address_book")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
+@With
 public class AddressBook {
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Exclude
     private long id;
 
     @Column(nullable = false, length = 100)
@@ -29,9 +28,9 @@ public class AddressBook {
     @OneToMany(mappedBy = "addressBook", cascade = CascadeType.ALL, fetch = FetchType.EAGER)
     private List<Contact> contacts;
 
-    @Column(name = "create_timestamp", insertable = false, updatable = false)
-    private Timestamp createTimestamp;
-
-    @Column(name = "create_timestamp", insertable = false, updatable = false)
-    private Timestamp updateTimestamp;
+//    @Column(name = "create_timestamp", insertable = false, updatable = false)
+//    private Timestamp createTimestamp;
+//
+//    @Column(name = "create_timestamp", insertable = false, updatable = false)
+//    private Timestamp updateTimestamp;
 }

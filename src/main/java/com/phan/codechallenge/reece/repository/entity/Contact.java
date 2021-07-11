@@ -1,9 +1,6 @@
 package com.phan.codechallenge.reece.repository.entity;
 
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.*;
 
@@ -13,13 +10,15 @@ import javax.persistence.*;
 @Table(name = "contacts")
 @NoArgsConstructor
 @AllArgsConstructor
+@EqualsAndHashCode
 public class Contact {
 
     @Id
     @GeneratedValue
+    @EqualsAndHashCode.Exclude
     private long id;
 
-    @Column(nullable = false, length = 20)
+    @Column(nullable = false, length = 40)
     private String name;
 
     @Column(nullable = false, length = 10)
