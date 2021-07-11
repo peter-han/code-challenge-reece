@@ -13,6 +13,7 @@ import javax.validation.constraints.NotEmpty;
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
 @RestController
+// TODO version control & API toggle
 @RequestMapping(path = "/v1/addressbook", produces = APPLICATION_JSON_VALUE)
 @RequiredArgsConstructor
 @Validated
@@ -20,6 +21,7 @@ public class AddressBookController {
 
     private final AddressBookService addressBookService;
 
+    // TODO Callable & web execution threads
     @PostMapping
     public ResponseEntity createByUser(@RequestBody AddressBookRequest request) {
         addressBookService.save(request.getUserName(), request.getBookName());

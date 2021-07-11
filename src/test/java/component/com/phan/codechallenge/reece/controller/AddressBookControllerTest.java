@@ -21,7 +21,7 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 @AutoConfigureMockMvc
 class AddressBookControllerTest {
 
-    String endpoint = "/v1/addressbook";
+    static final String ENDPOINT = "/v1/addressbook";
 
     @Autowired
     MockMvc mockMvc;
@@ -45,7 +45,7 @@ class AddressBookControllerTest {
 
     @Test
     void createByUsers(TestInfo testInfo) throws Exception {
-        mockMvc.perform(post(endpoint)
+        mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(request)))
@@ -56,17 +56,17 @@ class AddressBookControllerTest {
 
     @Test
     void createByUsers_noBody_400() throws Exception {
-        mockMvc.perform(post(endpoint)
+        mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().isBadRequest());
     }
 
     @Test
-    void createByUsers_invalidBody_400() throws Exception {
+    void createByUsers_invalidBody_4xx() throws Exception {
         AddressBookRequest request = AddressBookRequest.builder().build();
 
-        mockMvc.perform(post(endpoint)
+        mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(request)))
@@ -82,7 +82,7 @@ class AddressBookControllerTest {
         addressBookRepository.save(addressBook);
         assertEquals(1, addressBookRepository.count());
 
-        mockMvc.perform(delete(endpoint)
+        mockMvc.perform(delete(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(request)))
@@ -100,7 +100,7 @@ class AddressBookControllerTest {
         addressBookRepository.save(addressBook);
         assertEquals(1, addressBookRepository.count());
 
-        mockMvc.perform(get(endpoint + "/" + userName)
+        mockMvc.perform(get(ENDPOINT + "/" + userName)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful());
