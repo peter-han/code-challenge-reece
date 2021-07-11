@@ -26,7 +26,7 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 ## Assumptions
 
-- Auth is not required
+- API Auth is not required
 - User's name is unique to identify a user.
 - User can have multiple Addresses; user define the name of each Address Book; the name is unique to identify a
   AddressBook per User.
@@ -44,7 +44,6 @@ As a Reece Branch Manager I would like an address book application So that I can
     - the concurrent calls are not covered. Duplicated records can happen, that the "name" on either "User" nor "Address
       Book" may not unique. (to avoid such duplication, need to implement centralize lock (i.e database level), but
       might impact performance)
-- Dependencies security check is missing
 - Enable `RequestLoggingFilter`, only for demo API access log, not in prod.
 
 ## Deliverables
