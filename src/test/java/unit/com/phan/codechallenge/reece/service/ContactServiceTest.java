@@ -15,7 +15,8 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 
-import java.util.Arrays;
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -97,13 +98,13 @@ class ContactServiceTest {
                 .name(userName)
                 .phone(987654321)
                 .build();
-        addressBook.setContacts(Arrays.asList(contact));
+        addressBook.setContacts(new ArrayList<>(Collections.singletonList(contact)));
         when(entitlementService.entitlementCheck(eq(userName), anyString()))
                 .thenReturn(addressBook);
         assertEquals(1, addressBook.getContacts().size());
 
         contactService.saveContact(request);
-        assertEquals(phone, contact.getPhone());
+
         assertEquals(2, addressBook.getContacts().size());
     }
 
