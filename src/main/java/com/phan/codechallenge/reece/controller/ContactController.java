@@ -4,6 +4,7 @@ import com.phan.codechallenge.reece.controller.bean.ContactRequest;
 import com.phan.codechallenge.reece.controller.bean.ContactResponse;
 import com.phan.codechallenge.reece.service.ContactService;
 import lombok.RequiredArgsConstructor;
+import org.apache.commons.lang3.StringUtils;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
@@ -37,9 +38,16 @@ public class ContactController {
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@Valid @PathVariable @NotEmpty @Size(max = 40) String user) {
-        Set<ContactResponse> contracts = contactService.getContracts(user);
+    public ResponseEntity<Set<ContactResponse>> getContactsByUser(@PathVariable @Valid @NotEmpty @Size(max = 40) String user,
+                                                                  @RequestParam(value = "addressBook", required = false) @Valid @Size(max = 100) String addressBook) {
+        Set<ContactResponse> contracts;
+
+        if (StringUtils.isEmpty(addressBook)) {
+            contracts = contactService.getContracts(user);
+        } else {
+            contracts = contactService.getContracts(user, addressBook);
+        }
+
         return ResponseEntity.ok(contracts);
     }
-
 }
