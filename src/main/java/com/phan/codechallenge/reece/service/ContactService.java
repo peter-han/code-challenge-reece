@@ -52,6 +52,20 @@ public class ContactService {
         contactRepository.delete(contact);
     }
 
+    public Set<ContactResponse> getContracts(String userName, String bookName) {
+        Optional<AddressBook> addressBook = addressBookService.getAddressBook(userName, bookName);
+
+        return addressBook.map(book -> book
+                .getContacts().stream()
+                .map(contact -> ContactResponse.builder()
+                        .addressBook(contact.getAddressBook().getName())
+                        .name(contact.getName())
+                        .phone(contact.getPhone())
+                        .build())
+                .collect(Collectors.toSet()))
+                .orElse(Collections.emptySet());
+    }
+
     public Set<ContactResponse> getContracts(String userName) {
         List<AddressBook> addressBooks = addressBookService.getAddressBooks(userName);
 

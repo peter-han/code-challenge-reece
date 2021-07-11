@@ -34,7 +34,7 @@ public class AddressBookController {
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity retrieveByUser(@Valid @PathVariable @NotEmpty @Max(20) String user) {
+    public ResponseEntity findAllByUser(@Valid @PathVariable @NotEmpty @Max(20) String user) {
         return ResponseEntity.ok(addressBookService.getAddressBooks(user));
     }
 

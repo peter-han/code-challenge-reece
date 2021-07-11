@@ -99,12 +99,23 @@ class ContactControllerTest {
 
     @Test
     @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"/db/testdata/testdata.sql"})
-    void retrieveByUser() throws Exception {
+    void getContractsByUser() throws Exception {
         mockMvc.perform(get(ENDPOINT + "/" + userName)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON))
                 .andExpect(status().is2xxSuccessful())
                 .andExpect(jsonPath("$", hasSize(3)));
+    }
+
+    @Test
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"/db/testdata/testdata.sql"})
+    void getContractsByUserAndBook() throws Exception {
+        mockMvc.perform(get(ENDPOINT + "/" + userName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .param("addressBook", "test book 1"))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$", hasSize(1)));
     }
 
     private AddressBook setEntitled() {
