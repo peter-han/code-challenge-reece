@@ -7,7 +7,7 @@ A simple yet powerful address book and contact manager (Reece.com.au coding chal
 * [Challenge statement](./README.md#Challenge-statement)
 * [Acceptance Criteria](./README.md#Acceptance-Criteria)
 * [Assumptions](./README.md#Assumptions)
-* [Not Implemented Yet](./README.md#Not Implemented Yet)
+* [Not Implemented Yet](./README.md#Not-Implemented-Yet)
 * [Deliverables](./README.md#Deliverables)
 * [Setup](./README.md#Setup)
 * [Quality Analysis](./README.md#Quality-Analysis)
