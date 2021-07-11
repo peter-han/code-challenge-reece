@@ -1,6 +1,6 @@
 package component.com.phan.codechallenge.reece.service;
 
-import com.phan.codechallenge.reece.controller.bean.ContactRequest;
+import com.phan.codechallenge.reece.controller.bean.AddressBookRequest;
 import com.phan.codechallenge.reece.repository.AddressBookRepository;
 import com.phan.codechallenge.reece.repository.ContactRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
@@ -31,7 +31,7 @@ class ContactServiceTest {
     AddressBookService addressBookService;
 
     String userName = "mickey mouse";
-    ContactRequest request = ContactRequest.builder()
+    AddressBookRequest request = AddressBookRequest.builder()
             .userName(userName)
             .contactName("hello kitty")
             .phone(123456789)

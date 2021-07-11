@@ -1,6 +1,6 @@
 package com.phan.codechallenge.reece.service;
 
-import com.phan.codechallenge.reece.controller.bean.ContactRequest;
+import com.phan.codechallenge.reece.controller.bean.AddressBookRequest;
 import com.phan.codechallenge.reece.repository.ContactRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.repository.entity.Contact;
@@ -20,7 +20,7 @@ public class ContactService {
     private final EntitlementService entitlementService;
     private final ContactRepository contactRepository;
 
-    public void saveContact(ContactRequest request) {
+    public void saveContact(AddressBookRequest request) {
         AddressBook addressBook = entitlementService.entitlementCheck(request.getUserName(), request.getBookName());
 
         Optional<Contact> contact = contactRepository.findByBookAndContactName(request.getBookName(), request.getContactName());
@@ -41,7 +41,7 @@ public class ContactService {
         }
     }
 
-    public void deleteContact(ContactRequest request) {
+    public void deleteContact(AddressBookRequest request) {
         AddressBook addressBook = entitlementService.entitlementCheck(request.getUserName(), request.getBookName());
 
         Contact contact = contactRepository.findByBookAndContactName(request.getBookName(), request.getContactName())
