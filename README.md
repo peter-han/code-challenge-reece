@@ -36,6 +36,7 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 ## Not Implemented Yet
 
+- Database index to be set
 - Callable API & web execution threads
 - Managing ThreadPool, timeout (circuit breaker is not require)
 - Business error mapping, no custom exception are defined
