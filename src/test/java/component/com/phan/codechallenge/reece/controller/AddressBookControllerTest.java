@@ -3,6 +3,7 @@ package component.com.phan.codechallenge.reece.controller;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.phan.codechallenge.reece.controller.bean.AddressBookRequest;
 import com.phan.codechallenge.reece.repository.AddressBookRepository;
+import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import component.com.phan.codechallenge.reece.ComponentTest;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -13,7 +14,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ComponentTest
@@ -31,18 +32,19 @@ class AddressBookControllerTest {
 
     String userName = "mickey mouse";
 
+    AddressBookRequest request;
+
     @BeforeEach
-    void setUp() {
+    void setUp(TestInfo testInfo) {
         assertEquals(0, addressBookRepository.count());
+        request = AddressBookRequest.builder()
+                .userName(userName)
+                .bookName(testInfo.getDisplayName())
+                .build();
     }
 
     @Test
     void createByUsers(TestInfo testInfo) throws Exception {
-        AddressBookRequest request = AddressBookRequest.builder()
-                .userName(userName)
-                .bookName(testInfo.getDisplayName())
-                .build();
-
         mockMvc.perform(post(endpoint)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
@@ -61,10 +63,46 @@ class AddressBookControllerTest {
     }
 
     @Test
-    void deleteByUsers() {
+    void createByUsers_invalidBody_400() throws Exception {
+        AddressBookRequest request = AddressBookRequest.builder().build();
+
+        mockMvc.perform(post(endpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(request)))
+                .andExpect(status().isBadRequest());
     }
 
     @Test
-    void retrieveByUsers() {
+    void deleteByUsers() throws Exception {
+        AddressBook addressBook = AddressBook.builder()
+                .name(request.getBookName())
+                .userName(request.getUserName())
+                .build();
+        addressBookRepository.save(addressBook);
+        assertEquals(1, addressBookRepository.count());
+
+        mockMvc.perform(delete(endpoint)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON)
+                .content(objectMapper.writeValueAsBytes(request)))
+                .andExpect(status().is2xxSuccessful());
+
+        assertEquals(0, addressBookRepository.count());
+    }
+
+    @Test
+    void retrieveByUsers() throws Exception {
+        AddressBook addressBook = AddressBook.builder()
+                .name(request.getBookName())
+                .userName(request.getUserName())
+                .build();
+        addressBookRepository.save(addressBook);
+        assertEquals(1, addressBookRepository.count());
+
+        mockMvc.perform(get(endpoint + "/" + userName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful());
     }
 }

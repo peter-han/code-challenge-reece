@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
-import java.util.concurrent.Callable;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -22,24 +21,20 @@ public class AddressBookController {
     private final AddressBookService addressBookService;
 
     @PostMapping
-    public Callable<ResponseEntity> createByUser(@RequestBody AddressBookRequest request) {
-        return () -> {
-            addressBookService.save(request.getUserName(), request.getBookName());
-            return ResponseEntity.ok().build();
-        };
+    public ResponseEntity createByUser(@RequestBody AddressBookRequest request) {
+        addressBookService.save(request.getUserName(), request.getBookName());
+        return ResponseEntity.ok().build();
     }
 
     @DeleteMapping
-    public Callable<ResponseEntity> deleteByUser(@RequestBody AddressBookRequest request) {
-        return () -> {
-            addressBookService.delete(request.getUserName(), request.getBookName());
-            return ResponseEntity.ok().build();
-        };
+    public ResponseEntity deleteByUser(@RequestBody AddressBookRequest request) {
+        addressBookService.delete(request.getUserName(), request.getBookName());
+        return ResponseEntity.ok().build();
     }
 
     @GetMapping(path = "/{user}")
-    public Callable<ResponseEntity> retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
-        return () -> ResponseEntity.ok(addressBookService.getAddressBooks(user));
+    public ResponseEntity retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
+        return ResponseEntity.ok(addressBookService.getAddressBooks(user));
     }
 
 }
