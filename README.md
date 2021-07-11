@@ -18,11 +18,11 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 - Address book will hold name and phone numbers of contact entries
 - Create a REST API which will have endpoints for the following
-  - Users should be able to add new contact entries
-  - Users should be able to remove existing contact entries
-  - Users should be able to print all contacts in an address book
-  - Users should be able to maintain multiple address books
-  - Users should be able to print a unique set of all contacts across multiple address books
+    - Users should be able to add new contact entries
+    - Users should be able to remove existing contact entries
+    - Users should be able to print all contacts in an address book
+    - Users should be able to maintain multiple address books
+    - Users should be able to print a unique set of all contacts across multiple address books
 
 ## Assumptions
 
@@ -78,8 +78,8 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 |Name|Report|
 |:----:|:---:|
-|Test Summary|```../reece/build/reports/tests/test/index.html```|
-|Test Coverage|```../reece/build/reports/tests/coverage/index.html```|
-|Checkstyle|```../reece/build/reports/checkstyle/main.html```|
-|FindBugs|```../reece/build/reports/findbugs/main.html```|
-|PMD|```../reece/build/reports/pmd/main.html```|
+|Test Summary|```../build/reports/tests/test/index.html```|
+|Test Coverage|```../build/reports/tests/coverage/index.html```|
+|Checkstyle|```../build/reports/checkstyle/main.html```|
+|FindBugs|```../build/reports/findbugs/main.html```|
+|PMD|```../build/reports/pmd/main.html```|
