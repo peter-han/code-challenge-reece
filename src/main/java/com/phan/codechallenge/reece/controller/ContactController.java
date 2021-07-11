@@ -1,6 +1,7 @@
 package com.phan.codechallenge.reece.controller;
 
 import com.phan.codechallenge.reece.controller.bean.ContactRequest;
+import com.phan.codechallenge.reece.controller.bean.ContactResponse;
 import com.phan.codechallenge.reece.service.ContactService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.ResponseEntity;
@@ -9,6 +10,7 @@ import org.springframework.web.bind.annotation.*;
 
 import javax.validation.constraints.Max;
 import javax.validation.constraints.NotEmpty;
+import java.util.Set;
 
 import static org.springframework.http.MediaType.APPLICATION_JSON_VALUE;
 
@@ -34,9 +36,9 @@ public class ContactController {
     }
 
     @GetMapping(path = "/{user}")
-    public ResponseEntity retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
-        contactService.getContracts(user);
-        return ResponseEntity.ok().build();
+    public ResponseEntity<Set<ContactResponse>> retrieveByUser(@PathVariable @NotEmpty @Max(20) String user) {
+        Set<ContactResponse> contracts = contactService.getContracts(user);
+        return ResponseEntity.ok(contracts);
     }
 
 }

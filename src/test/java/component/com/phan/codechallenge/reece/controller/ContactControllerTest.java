@@ -7,17 +7,17 @@ import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.repository.entity.Contact;
 import com.phan.codechallenge.reece.service.AddressBookService;
 import component.com.phan.codechallenge.reece.ComponentTest;
-import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.api.TestInfo;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.AutoConfigureMockMvc;
 import org.springframework.http.MediaType;
+import org.springframework.test.context.jdbc.Sql;
 import org.springframework.test.web.servlet.MockMvc;
 
+import static org.hamcrest.Matchers.hasSize;
 import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.delete;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
+import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 @ComponentTest
@@ -42,13 +42,10 @@ class ContactControllerTest {
             .phone(1234567890)
             .build();
 
-    @BeforeEach
-    void setUp(TestInfo testInfo) {
-        assertEquals(0, contactRepository.count());
-    }
-
     @Test
     void addContact() throws Exception {
+        assertEquals(0, contactRepository.count());
+
         setEntitled();
 
         mockMvc.perform(post(ENDPOINT)
@@ -68,13 +65,12 @@ class ContactControllerTest {
                 .content(objectMapper.writeValueAsBytes(request)))
                 .andExpect(status().is4xxClientError());
 
-        assertEquals(1, contactRepository.count());
+        assertEquals(0, contactRepository.count());
     }
 
     @Test
     void deleteByUser() throws Exception {
         AddressBook addressBook = setEntitled();
-
         contactRepository.save(Contact.builder()
                 .addressBook(addressBook)
                 .name(request.getContactName())
@@ -103,7 +99,13 @@ class ContactControllerTest {
     }
 
     @Test
-    void retrieveByUser() {
+    @Sql(executionPhase = Sql.ExecutionPhase.BEFORE_TEST_METHOD, scripts = {"/db/testdata/testdata.sql"})
+    void retrieveByUser() throws Exception {
+        mockMvc.perform(get(ENDPOINT + "/" + userName)
+                .contentType(MediaType.APPLICATION_JSON)
+                .accept(MediaType.APPLICATION_JSON))
+                .andExpect(status().is2xxSuccessful())
+                .andExpect(jsonPath("$", hasSize(3)));
     }
 
     private AddressBook setEntitled() {

@@ -44,7 +44,7 @@ class AddressBookControllerTest {
     }
 
     @Test
-    void createByUsers(TestInfo testInfo) throws Exception {
+    void createByUsers() throws Exception {
         mockMvc.perform(post(ENDPOINT)
                 .contentType(MediaType.APPLICATION_JSON)
                 .accept(MediaType.APPLICATION_JSON)
