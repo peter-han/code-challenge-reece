@@ -1,6 +1,7 @@
 package com.phan.codechallenge.reece.service;
 
 import com.phan.codechallenge.reece.controller.bean.ContactRequest;
+import com.phan.codechallenge.reece.controller.bean.ContactResponse;
 import com.phan.codechallenge.reece.repository.ContactRepository;
 import com.phan.codechallenge.reece.repository.entity.AddressBook;
 import com.phan.codechallenge.reece.repository.entity.Contact;
@@ -51,7 +52,7 @@ public class ContactService {
         contactRepository.delete(contact);
     }
 
-    public Set<Contact> getContracts(String userName) {
+    public Set<ContactResponse> getContracts(String userName) {
         List<AddressBook> addressBooks = addressBookService.getAddressBooks(userName);
 
         if (CollectionUtils.isEmpty(addressBooks))
@@ -59,6 +60,11 @@ public class ContactService {
 
         return addressBooks.stream()
                 .flatMap(addressBook -> addressBook.getContacts().stream())
+                .map(contact -> ContactResponse.builder()
+                        .addressBook(contact.getAddressBook().getName())
+                        .name(contact.getName())
+                        .phone(contact.getPhone())
+                        .build())
                 .collect(Collectors.toSet());
     }
 }

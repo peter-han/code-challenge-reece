@@ -18,7 +18,8 @@ dependencies {
             'org.springframework.boot:spring-boot-starter-actuator',
             'org.springframework.boot:spring-boot-starter-data-jpa',
             'org.postgresql:postgresql',
-            'org.flywaydb:flyway-core'
+            'org.flywaydb:flyway-core',
+            'javax.validation:validation-api'
     )
     compileOnly 'org.projectlombok:lombok'
     annotationProcessor 'org.projectlombok:lombok'

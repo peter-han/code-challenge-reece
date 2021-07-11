@@ -30,6 +30,11 @@ As a Reece Branch Manager I would like an address book application So that I can
   call happens with the same name, could create duplicated records. (to avoid such duplication, need to implement
   database level of lock, but might reduece performance)
 
+## Not yet implement
+
+- callable API
+- managing ThreadPool
+
 ## Deliverables
 
 - API spec would be nice to have
