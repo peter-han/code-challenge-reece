@@ -55,8 +55,9 @@ public class ContactService {
     public Set<ContactResponse> getContracts(String userName) {
         List<AddressBook> addressBooks = addressBookService.getAddressBooks(userName);
 
-        if (CollectionUtils.isEmpty(addressBooks))
+        if (CollectionUtils.isEmpty(addressBooks)) {
             return Collections.emptySet();
+        }
 
         return addressBooks.stream()
                 .flatMap(addressBook -> addressBook.getContacts().stream())

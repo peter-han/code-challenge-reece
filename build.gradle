@@ -3,6 +3,9 @@ plugins {
     id 'org.springframework.boot' version '2.5.0'
     id 'io.spring.dependency-management' version '1.0.11.RELEASE'
     id "com.avast.gradle.docker-compose" version "0.14.3"
+    id 'pmd'
+//    id 'checkstyle'
+    id 'jacoco'
 }
 
 repositories {
@@ -34,41 +37,40 @@ dependencies {
 
 test {
     useJUnitPlatform()
+    testLogging {
+        events "passed", "skipped", "failed"
+    }
+    dependsOn composeUp
+    finalizedBy composeDown
+    finalizedBy jacocoTestReport
 }
-test.dependsOn(composeUp)
-//        .finalizedBy(composeDown)
 
 dockerCompose {
     useComposeFiles = ['src/main/docker/compose/docker-compose.yaml']
 }
 
-//test {
-//    testLogging {
-//        events "passed", "skipped", "failed"
-//    }
-//}
-//
-//// quality check report
-//jacocoTestReport {
-//    group = "Reporting"
-//    reports {
-//        xml.enabled true
-//        csv.enabled false
-//        html.destination "${buildDir}/reports/tests/coverage"
-//    }
-//}
+jacocoTestReport {
+    dependsOn test
+    afterEvaluate {
+        classDirectories.setFrom(files(classDirectories.files.collect {
+            fileTree(dir: it, exclude: '**/Application.*')
+        }))
+    }
+}
+
 //checkstyle {
+//    toolVersion = '6.11.2'
 //    ignoreFailures = true
-//    configFile = rootProject.file('config/checkstyle.xml')
+//    configFile = rootProject.file('checkstyle.xml')
 //}
+
+pmd {
+    ignoreFailures = true
+    ruleSetFiles = files("${rootProject.rootDir}/config/pmd/pmd.xml")
+}
 //findbugs {
 //    ignoreFailures = true
 //    findbugsTest.enabled = false
-//}
-//// pmd : optional, if you need customization
-//pmd {
-//    ignoreFailures = true
-//    ruleSetFiles = files("${rootProject.rootDir}/config/pmd.xml")
 //}
 //
 //tasks.withType(Checkstyle) {

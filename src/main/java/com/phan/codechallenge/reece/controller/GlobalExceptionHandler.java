@@ -14,7 +14,7 @@ import javax.servlet.http.HttpServletRequest;
 public class GlobalExceptionHandler {
 
     @ExceptionHandler({IllegalArgumentException.class, HttpMessageNotReadableException.class, HttpMediaTypeNotSupportedException.class})
-    public ResponseEntity handle(IllegalArgumentException exception, HttpServletRequest request) {
+    public ResponseEntity handle(Exception exception, HttpServletRequest request) {
         return new ResponseEntity(HttpStatus.BAD_REQUEST);
     }
 

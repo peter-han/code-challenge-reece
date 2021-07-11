@@ -94,8 +94,6 @@ class ContactControllerTest {
                 .accept(MediaType.APPLICATION_JSON)
                 .content(objectMapper.writeValueAsBytes(request)))
                 .andExpect(status().is4xxClientError());
-
-        assertEquals(1, contactRepository.count());
     }
 
     @Test
