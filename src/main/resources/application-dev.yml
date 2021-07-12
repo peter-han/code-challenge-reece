@@ -1,0 +1,11 @@
+management:
+  endpoints:
+    web:
+      exposure:
+        include: info,health,env,integration
+
+server:
+  port: 8080
+
+db:
+  host: db

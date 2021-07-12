@@ -74,11 +74,11 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 6. Run App
 
-   ```docker run --rm -it -p 8081:8081 --network=host address-book:latest```
+   ```docker-compose -f 'src/main/docker/compose/docker-compose-dev.yaml' up -d```
 
-7. Health API
+7. Verify healthy
 
-   ``http://localhost:8081/addressbook/actuator``
+   ``http://localhost:8080/addressbook/actuator/health``
 
 8. API doc
 
@@ -92,6 +92,3 @@ As a Reece Branch Manager I would like an address book application So that I can
 |:----:|:---:|
 |Test Summary|```../build/reports/tests/test/index.html```|
 |Test Coverage|```../build/reports/tests/coverage/index.html```|
-|Checkstyle|```../build/reports/checkstyle/main.html```|
-|FindBugs|```../build/reports/findbugs/main.html```|
-|PMD|```../build/reports/pmd/main.html```|
