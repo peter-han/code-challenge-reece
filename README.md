@@ -60,29 +60,29 @@ As a Reece Branch Manager I would like an address book application So that I can
 
 1. Make sure you have Java 8 and Docker installed in your machine.
 2. Clone git repository
-3. Build app, run tests
+3. Build App
 
    ```./gradlew clean build```
 
-4. build docker
+4. Build docker
 
    ```./gradlew bootBuildImage```
 
-5. Startup testing env (postgres)
-
-   ```./gradlew composeUp```
-
-6. Run App
+5. Run App
 
    ```docker-compose -f 'src/main/docker/compose/docker-compose-dev.yaml' up -d```
 
-7. Verify healthy
+6. Verify healthy
 
    ``http://localhost:8080/addressbook/actuator/health``
 
-8. API doc
+7. API doc
 
    ``http://localhost:8081/addressbook/swagger-ui.html``
+
+8. Startup testing env alone (postgres)
+
+   ```./gradlew composeUp```
 
 ![img.png](swagger-ui.png)
 
