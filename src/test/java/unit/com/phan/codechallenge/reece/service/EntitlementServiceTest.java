@@ -39,7 +39,7 @@ class EntitlementServiceTest {
 
     @Test
     void entitlementCheck_failed(TestInfo testInfo) {
-        when(addressBookRepository.findByUserNameAndName(eq(userName), anyString())).thenThrow(IllegalArgumentException.class);
+        when(addressBookRepository.findByUserNameAndName(eq(userName), anyString())).thenReturn(Optional.empty());
 
         assertThrows(IllegalArgumentException.class, () -> entitlementService.entitlementCheck(userName, testInfo.getDisplayName()));
     }

@@ -80,8 +80,4 @@ class AddressBookServiceTest {
 
         assertThrows(IllegalArgumentException.class, () -> addressBookService.delete(userName, testInfo.getDisplayName()));
     }
-
-    void saveContact() {
-
-    }
 }
