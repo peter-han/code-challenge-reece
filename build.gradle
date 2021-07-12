@@ -51,7 +51,6 @@ test {
 
 dockerCompose {
     useComposeFiles = ['src/main/docker/compose/docker-compose.yaml']
-    dependsOn bootBuildImage
 }
 
 jacocoTestReport {
