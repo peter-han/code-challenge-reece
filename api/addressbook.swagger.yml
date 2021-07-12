@@ -1,273 +1,173 @@
-{
-  "openapi": "3.0.1",
-  "info": {
-    "title": "OpenAPI definition",
-    "version": "v0"
-  },
-  "servers": [
-    {
-      "url": "http://localhost:8081/addressbook",
-      "description": "Generated server url"
-    }
-  ],
-  "paths": {
-    "/v1/contact": {
-      "post": {
-        "tags": [
-            "contact-controller"
-        ],
-        "operationId": "addContact",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-            "contact-controller"
-        ],
-        "operationId": "deleteByUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/ContactRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/addressbook": {
-      "post": {
-        "tags": [
-            "address-book-controller"
-        ],
-        "operationId": "createByUser",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddressBookRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      },
-      "delete": {
-        "tags": [
-            "address-book-controller"
-        ],
-        "operationId": "deleteByUser_1",
-        "requestBody": {
-          "content": {
-            "application/json": {
-              "schema": {
-                "$ref": "#/components/schemas/AddressBookRequest"
-              }
-            }
-          },
-          "required": true
-        },
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/contact/{user}": {
-      "get": {
-        "tags": [
-            "contact-controller"
-        ],
-        "operationId": "getContactsByUser",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "maxLength": 40,
-              "minLength": 0,
-              "type": "string"
-            }
-          },
-          {
-            "name": "addressBook",
-            "in": "query",
-            "required": false,
-            "schema": {
-              "maxLength": 100,
-              "minLength": 0,
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "uniqueItems": true,
-                  "type": "array",
-                  "items": {
-                    "$ref": "#/components/schemas/ContactResponse"
-                  }
-                }
-              }
-            }
-          }
-        }
-      }
-    },
-    "/v1/addressbook/{user}": {
-      "get": {
-        "tags": [
-            "address-book-controller"
-        ],
-        "operationId": "findAllByUser",
-        "parameters": [
-          {
-            "name": "user",
-            "in": "path",
-            "required": true,
-            "schema": {
-              "maximum": 20,
-              "type": "string"
-            }
-          }
-        ],
-        "responses": {
-          "200": {
-            "description": "OK",
-            "content": {
-              "application/json": {
-                "schema": {
-                  "type": "string"
-                }
-              }
-            }
-          }
-        }
-      }
-    }
-  },
-  "components": {
-    "schemas": {
-      "ContactRequest": {
-        "required": [
-            "bookName",
-            "userName"
-        ],
-        "type": "object",
-        "properties": {
-          "userName": {
-            "maxLength": 40,
-            "minLength": 0,
-            "type": "string"
-          },
-          "bookName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "contactName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          },
-          "phone": {
-            "pattern": "^\\d{10}$",
-            "type": "string"
-          }
-        }
-      },
-      "AddressBookRequest": {
-        "required": [
-            "bookName",
-            "userName"
-        ],
-        "type": "object",
-        "properties": {
-          "userName": {
-            "maxLength": 40,
-            "minLength": 0,
-            "type": "string"
-          },
-          "bookName": {
-            "maxLength": 100,
-            "minLength": 0,
-            "type": "string"
-          }
-        }
-      },
-      "ContactResponse": {
-        "type": "object",
-        "properties": {
-          "name": {
-            "type": "string"
-          },
-          "phone": {
-            "type": "string"
-          },
-          "addressBook": {
-            "type": "string"
-          }
-        }
-      }
-    }
-  }
-}
+openapi: 3.0.1
+info:
+  title: OpenAPI definition
+  version: v0
+servers:
+  - url: 'http://localhost:8081/addressbook'
+    description: Generated server url
+paths:
+  /v1/contact:
+    post:
+      tags:
+        - contact-controller
+      operationId: addContact
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - contact-controller
+      operationId: deleteByUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ContactRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  /v1/addressbook:
+    post:
+      tags:
+        - address-book-controller
+      operationId: createByUser
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressBookRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+    delete:
+      tags:
+        - address-book-controller
+      operationId: deleteByUser_1
+      requestBody:
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/AddressBookRequest'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+  '/v1/contact/{user}':
+    get:
+      tags:
+        - contact-controller
+      operationId: getContactsByUser
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            maxLength: 40
+            minLength: 0
+            type: string
+        - name: addressBook
+          in: query
+          required: false
+          schema:
+            maxLength: 100
+            minLength: 0
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                uniqueItems: true
+                type: array
+                items:
+                  $ref: '#/components/schemas/ContactResponse'
+  '/v1/addressbook/{user}':
+    get:
+      tags:
+        - address-book-controller
+      operationId: findAllByUser
+      parameters:
+        - name: user
+          in: path
+          required: true
+          schema:
+            maximum: 20
+            type: string
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: string
+components:
+  schemas:
+    ContactRequest:
+      required:
+        - bookName
+        - userName
+      type: object
+      properties:
+        userName:
+          maxLength: 40
+          minLength: 0
+          type: string
+        bookName:
+          maxLength: 100
+          minLength: 0
+          type: string
+        contactName:
+          maxLength: 100
+          minLength: 0
+          type: string
+        phone:
+          pattern: '^\d{10}$'
+          type: string
+    AddressBookRequest:
+      required:
+        - bookName
+        - userName
+      type: object
+      properties:
+        userName:
+          maxLength: 40
+          minLength: 0
+          type: string
+        bookName:
+          maxLength: 100
+          minLength: 0
+          type: string
+    ContactResponse:
+      type: object
+      properties:
+        name:
+          type: string
+        phone:
+          type: string
+        addressBook:
+          type: string
